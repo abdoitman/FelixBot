@@ -12,5 +12,5 @@ __pycache__/
 imagine/__pycache__/
 
 #ignore folders
-__frames/
-__output/
+__frames/*
+__output/*
