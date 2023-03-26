@@ -1,6 +1,1 @@
-{
-    "equationsin(x_1*pi/180)*cos(x_2*pi/180)varx_1x_2withconstraintsnone": "./__output/animated_3Deq_26Mar2023222306.mp4",
-    "equationsqrt(x_1)*sqrt(x_2)varx_1x_2withconstraintsnone": "./__output/animated_3Deq_26Mar2023222715.mp4",
-    "equation0.5*x_1*exp(x_2)varx_1x_2withconstraintsx_2>=-5,x_2<=5": "./__output/animated_3Deq_26Mar2023223101.mp4",
-    "equationx**2+y**2varxywithconstraintsnone": "./__output/animated_3Deq_26Mar2023223904.mp4"
-}
+{"equationsin(x_1*pi/180)*cos(x_2*pi/180)varx_1x_2withconstraintsnone": "./__output/animated_3Deq_26Mar2023222306.mp4", "equationsqrt(x_1)*sqrt(x_2)varx_1x_2withconstraintsnone": "./__output/animated_3Deq_26Mar2023222715.mp4", "equation0.5*x_1*exp(x_2)varx_1x_2withconstraintsx_2>=-5,x_2<=5": "./__output/animated_3Deq_26Mar2023223101.mp4", "equationx**2+y**2varxywithconstraintsnone": "./__output/animated_3Deq_26Mar2023223904.mp4", "equationsin(x*pi/90)*yvarxywithconstraintsnone": "./__output/animated_3Deq_26Mar2023230015.mp4"}
