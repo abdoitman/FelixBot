@@ -1,8 +1,6 @@
 import matplotlib.pyplot as plt
-import matplotlib
-matplotlib.use('TkAgg')
 from mpl_toolkits.mplot3d import Axes3D
-from animate import animate_vectors
+from .animate import animate_vectors
 from time import gmtime, strftime
 import re
 

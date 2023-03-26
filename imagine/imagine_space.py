@@ -10,11 +10,9 @@ from time import gmtime, strftime
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import cm
-import matplotlib
-matplotlib.use('TkAgg')
 from mpl_toolkits.mplot3d.axes3d import Axes3D
 
-from animate import animate_surface
+from .animate import animate_surface
 
 __operations = {"sin": "np.sin",
                 "cos": "np.cos",
@@ -143,8 +141,10 @@ def __imagine_3d(variables, eq, constraints, angle=240, is_frame=False):
         for cons in modified_constrains:
             Z[eval(cons)] = np.nan
 
-    fig = plt.figure(figsize=(14.4, 14.4))
-    ax = fig.add_subplot(projection='3d')
+    fig, ax = plt.subplots(figsize=(14.4, 14.4), subplot_kw={"projection":"3d"})
+
+    # fig = plt.figure(figsize=(14.4, 14.4))
+    # ax = fig.add_subplot(projection='3d')
     surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,
                            linewidth=1,
                            antialiased=False)
