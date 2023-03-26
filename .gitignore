@@ -2,12 +2,15 @@
 .env
 
 #igone tests
-test.py
-test2.py
+test*
 
 #ignore logger
 logger.txt
 
+#ignore __pycache__
+__pycache__/
+imagine/__pycache__/
+
 #ignore folders
-__frames/
-__output/
+__frames/*
+__output/*
