@@ -141,10 +141,8 @@ def __imagine_3d(variables, eq, constraints, angle=240, is_frame=False):
         for cons in modified_constrains:
             Z[eval(cons)] = np.nan
 
-    fig, ax = plt.subplots(figsize=(14.4, 14.4), subplot_kw={"projection":"3d"})
-
-    # fig = plt.figure(figsize=(14.4, 14.4))
-    # ax = fig.add_subplot(projection='3d')
+    fig = plt.figure(figsize=(14.4, 14.4))
+    ax = fig.add_subplot(projection='3d')
     surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,
                            linewidth=1,
                            antialiased=False)
