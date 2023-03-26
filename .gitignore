@@ -1,15 +1,19 @@
 #ignore env file
 .env
 
+
 #igone tests
 test*
+
 
 #ignore logger
 logger.txt
 
+
 #ignore __pycache__
 __pycache__/
 imagine/__pycache__/
+
 
 #ignore folders
 __frames/
