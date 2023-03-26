@@ -80,7 +80,7 @@ def __save_latex_png(latex_exp, file = 'output.png', to_white=True):
     f.write( r.content )
     f.close()
     if to_white:
-        os.system( 'magick convert tmp.png -channel RGB -negate -colorspace rgb %s' %file )
+        os.system( 'magick convert ./__output/tmp.png -channel RGB -negate -colorspace rgb %s' %file )
 
 def generate_latex_png(message, is_equation_only= False):
 

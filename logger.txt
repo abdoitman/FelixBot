@@ -231,3 +231,6 @@
 2023-03-26 22:02:30 -> itman#6952: f::imagine equation 2 ** x var x with constraints none
 2023-03-26 22:04:55 -> itman#6952: f::imagine equation 0.5 ** x var x with constraints none
 2023-03-26 22:06:00 -> itman#6952: f::imagine equation 0.5**x var x with constraints x > -10, x < 5
+2023-03-26 23:28:52 -> itman#6952: f::help
+2023-03-26 23:29:26 -> itman#6952: f::show var x # sin(x)
+2023-03-26 23:30:43 -> itman#6952: f::show var x # sin(x)

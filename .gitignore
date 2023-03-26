@@ -4,3 +4,10 @@
 #igone tests
 test.py
 test2.py
+
+#ignore logger
+logger.txt
+
+#ignore folders
+__frames/
+__output/
