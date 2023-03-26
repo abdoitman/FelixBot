@@ -1,6 +1,5 @@
 import imageio
 from time import gmtime, strftime
-# import asyncio
 
 __step = 2
 __start = __step
@@ -21,7 +20,7 @@ def animate_vectors(vectors, max_coordinate, min_coordinate, drawing_func):
     frames = []
     try:
         for t in range(__start,__stop,__step):
-            image = imageio.v2.imread(f'./__frames/frame_{t}.jpg')
+            image = imageio.v2.imread(f'./__frames/frame_{t}.png')
             frames.append(image)
 
         filename = "./__output/animated_3Dvec_" + strftime("%d%b%Y%H%M%S", gmtime()) + ".mp4"
