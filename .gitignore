@@ -1,0 +1,6 @@
+#ignore env file
+.env
+
+#igone tests
+test.py
+test2.py
