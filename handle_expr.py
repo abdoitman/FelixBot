@@ -74,7 +74,7 @@ def __save_latex_png(latex_exp, file = 'output.png', to_white=True):
     tfile = file
     latex_exp = __remove_escape_characters(latex_exp)
     if to_white:
-        tfile = 'tmp.png'
+        tfile = './__output/tmp.png'
     r = requests.get( 'http://latex.codecogs.com/png.latex?\dpi{300} \huge %s' % latex_exp )
     f = open( tfile, 'wb' )
     f.write( r.content )
