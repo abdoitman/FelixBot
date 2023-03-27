@@ -47,7 +47,7 @@ def run_discord_bot():
         bot_help = find(lambda x: x.name == 'bot-help',  guild.text_channels)
         if bot_help and bot_help.permissions_for(guild.me).send_messages:
             await bot_help.send("@everyone")
-            r1, _, r2 = handle_responses.process("help")
+            r1, _, r2 = await handle_responses.process("help")
             await bot_help.send(r1)
             await bot_help.send(r2)
 
