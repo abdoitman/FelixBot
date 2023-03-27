@@ -84,7 +84,7 @@ async def process(message, client):
     if command == 'optimize':
         response, drawing_command = optimize.solve(message)
         if drawing_command != "":
-            _ , filename = imagine.see_through(drawing_command, client)
+            _ , filename = await imagine.see_through(drawing_command, client)
             contains_media = True
         else:
             filename = ""
