@@ -6,12 +6,6 @@ import re
 
 def __get_vectors(str_vectors):
     
-    ## Error handling
-    #Check for missing '#'
-    if "][" in str_vectors.replace(" ",""): raise Exception("Missing `#`")
-    #Chck for missing '['
-    if error := re.findall(r"\]\d", str_vectors.replace(" ","")): raise Exception(f"Fix `{str(*error)}` !\nPerhaps missing a `[`")
-
     str_vectors_list = str_vectors.split("#")
 
     vectors = []

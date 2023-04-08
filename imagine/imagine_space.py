@@ -12,6 +12,7 @@ import numpy as np
 from matplotlib import cm
 from mpl_toolkits.mplot3d.axes3d import Axes3D
 
+import InputCommands
 from .animate import animate_surface
 
 __operations = {"sin": "np.sin",
@@ -55,29 +56,17 @@ def __modify_constraints(constraints):
 
     return modified_constraints
 
-
-def __get_exprs(message):
-    try:
-        eq = re.findall(r".+?(?=var)", message)[0].strip()
-        variables = re.findall(r"(?<=var).*(?=w)", message)[0].strip()
-        constraints = re.findall(r"(?<=ts).*", message)[0].strip().split(',')
-    except:
-        raise Exception("Missing attributes!")
-
-    return variables, eq, constraints
-
-
 def __imagine_2d(variables, eq, constraints):
     fixed_equation = eq.replace("**", "^")
     fixed_constraints = constraints
-    var = variables.split()[0]
+    var = variables[0]
     if var != "X":
         eq = eq.replace(var, "X")
-        if constraints[0] != 'none':
+        if constraints != 'none':
             constraints = [cons.replace(var, "X") for cons in constraints]
 
     eq = __change_operation_to_np(eq)
-    if constraints[0] != 'none':
+    if constraints != 'none':
         modified_constraints = __modify_constraints(constraints)
 
     def z_func(eq, a):
@@ -94,9 +83,10 @@ def __imagine_2d(variables, eq, constraints):
     fig, ax = plt.subplots(figsize=(10, 10))
     ax.plot(X, Z, color="#0E3C45")
 
-    if constraints[0] != 'none':
+    if constraints != 'none':
         str_constraints = ",".join(
             ['$' + cons + '$' for cons in fixed_constraints])
+        
         ax.set_title(f"Drawing $f({var})$ = $ {fixed_equation}$ subject to {str_constraints}",
                   fontdict={'fontsize': 18})
     else:
@@ -117,15 +107,14 @@ def __imagine_3d(variables, eq, constraints, angle=240, is_frame=False):
     fixed_equation = eq.replace("**", "^")
     fixed_constraints = [cons.replace("**", "^") for cons in constraints]
 
-    if variables.split() != ["X", "Y"]:
-        for var, new_var in zip(variables.split(), ["X", "Y"]):
+    if variables != ["X", "Y"]:
+        for var, new_var in zip(variables, ["X", "Y"]):
             eq = eq.replace(var, new_var)
-            if constraints[0] != 'none':
-                constraints = [cons.replace(var, new_var)
-                               for cons in constraints]
+            if constraints != 'none':
+                constraints = [cons.replace(var, new_var) for cons in constraints]
 
     eq = __change_operation_to_np(eq)
-    if constraints[0] != 'none':
+    if constraints != 'none':
         modified_constrains = __modify_constraints(constraints)
 
     def z_func(eq, a, b):
@@ -137,7 +126,7 @@ def __imagine_3d(variables, eq, constraints, angle=240, is_frame=False):
     y = np.arange(-30, 30, 0.05)
     X, Y = np.meshgrid(x, y)
     Z = z_func(eq, X, Y)
-    if constraints[0] != 'none':
+    if constraints != 'none':
         for cons in modified_constrains:
             Z[eval(cons)] = np.nan
 
@@ -150,21 +139,21 @@ def __imagine_3d(variables, eq, constraints, angle=240, is_frame=False):
 
     ax.view_init(elev=35, azim=angle, roll=0)
 
-    if constraints[0] != 'none':
+    if constraints != 'none':
         str_constraints = ", ".join(
             ['$' + cons + '$' for cons in fixed_constraints])
-        plt.title(f"Drawing $f({variables.split()[0]}, {variables.split()[1]})$ = ${fixed_equation}$ subject to {str_constraints}",
+        plt.title(f"Drawing $f({variables[0]}, {variables[1]})$ = ${fixed_equation}$ subject to {str_constraints}",
                   fontdict={'fontsize': 18})
     else:
-        plt.title(f"Drawing $f({variables.split()[0]}, {variables.split()[1]})$ = ${fixed_equation}$",
+        plt.title(f"Drawing $f({variables[0]}, {variables[1]})$ = ${fixed_equation}$",
                   fontdict={'fontsize': 18})
         
-    ax.set_xlabel(f"${variables.split()[0]}$",
+    ax.set_xlabel(f"${variables[0]}$",
                   fontdict={'fontsize': 12})
-    ax.set_ylabel(f"${variables.split()[1]}$",
+    ax.set_ylabel(f"${variables[1]}$",
                   fontdict={'fontsize': 12})
     ax.set_zlabel(
-        f"$f({variables.split()[0]}, {variables.split()[1]})$", rotation=0)
+        f"$f({variables[0]}, {variables[1]})$", rotation=0)
 
     if is_frame:
         fig.savefig(f"./__frames/frame_{angle}.png")
@@ -177,25 +166,14 @@ def __imagine_3d(variables, eq, constraints, angle=240, is_frame=False):
 
 
 def draw_space(message):
-    variables, eq, constraints = __get_exprs(message)
+    space = InputCommands.InputParser(message)
+    variables, equation, constraints = space.get_variables(), space.get_equation(), space.get_constraints()
 
-    # Error handling
-    # If any digit followed by a string was found
-    if error := re.findall(r"(\d[A-Za-z])", eq.replace(" ", "")):
-        raise Exception(
-            f"Something's wrong. Fix `{str(*error)}`!\n**NOTE**: To multiply 2 expression use \* in between.")
+    if len(variables) == 1:
+        filename = __imagine_2d(variables, equation, constraints)
 
-    if len(variables.split()) == 1:
-        filename = __imagine_2d(variables, eq, constraints)
-
-    elif len(variables.split()) == 2:
-        # Error handling
-        # If any 2 variables came after each other
-        if variables.replace(" ", "") in eq.replace(" ", ""):
-            raise Exception(
-                f"Something's worng. Fix `{variables.strip()}`!\n**NOTE**: To multiply 2 expression use \* in between.")
-
-        filename = animate_surface(variables, eq, constraints, __imagine_3d)
+    elif len(variables) == 2:
+        filename = animate_surface(variables, equation, constraints, __imagine_3d)
     else:
         raise Exception("Can't draw more than 3 dimensions!")
 
