@@ -1,4 +1,4 @@
-import handle_expr
+import write_latex
 from imagine import imagine
 import optimize
 import check
@@ -6,7 +6,7 @@ import re
 
 def __show_latex(message, is_equation_only= False):
     try:
-        filename = handle_expr.generate_latex_png(message, is_equation_only)
+        filename = write_latex.generate_latex_png(message, is_equation_only)
         response = "This is your equation bellow:"
         return response , filename
     except Exception as e:
