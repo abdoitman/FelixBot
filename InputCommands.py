@@ -1,5 +1,5 @@
 import re
-
+from validation import *
 
 class InputParser:
 
@@ -11,7 +11,7 @@ class InputParser:
         except:
             raise Exception("Missing attributes : `Equation`")
 
-        if "constraints" not in self.__message: #equation has no constraints
+        if "with" not in self.__message: #equation has no constraints
 
             try:
                 self.__variables :list = re.findall(r"(?<=var).*", self.__message)[0].strip().split()
@@ -20,18 +20,19 @@ class InputParser:
             
             self.__constraints = "none"
 
-        else:
+        else: #equation does have constraints
             try:
-                self.__variables :list = re.findall(r"(?<=var).*(?=w)", self.__message)[0].strip().split()
+                self.__variables :list = re.findall(r"(?<=var).*(?=with)", self.__message)[0].strip().split()
             except:
-                raise Exception("Missing Attribute: `variables`\n**NOTE**: Specify the variables i nthe equation after entering the equaition using `var` keyword.")
+                raise Exception("Missing Attribute: `variables`\n**NOTE**: Specify the variables in the equation after entering the equaition using `var` keyword.")
             
             self.__constraints :list = re.findall(r"(?<=ts).*", self.__message)[0].strip().split(',')
             if self.__constraints == ['']: raise Exception("Specify the constraints of the equation.")
-            
-    def validate_input(self):
-        
-        pass
+
+        #Validate input
+        validate_equation(self.__equation, self.__variables)
+        for cons in self.__constraints:
+            validate_equation(cons, self.__variables)
 
     def get_equation(self):
         return self.__equation
@@ -52,5 +53,6 @@ class MatrixParser:
     def __init__(self, input_str_matrix) -> None:
         pass
 
-e1 = InputParser("sin(x) var x with constraints")
-print(e1.get_equation(), e1.get_variables(), e1.get_constraints())
+if __name__ == "__main__":
+    e1 = InputParser("sin(x_1 * y_2 ) var x_1 y_2 with consats x>1")
+    print(e1.get_equation(), e1.get_variables(), e1.get_constraints())
