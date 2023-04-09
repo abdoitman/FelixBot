@@ -31,7 +31,7 @@ def __save_latex_png(latex_exp, file = 'output.png', to_white=True):
     if to_white:
         os.system( 'magick convert ./__output/tmp.png -channel RGB -negate -colorspace rgb %s' %file )
 
-def generate_latex_png(message):
+def __generate_latex_png(message):
 
     latex_command = InputCommands.InputParser(message)
 
@@ -48,7 +48,7 @@ def generate_latex_png(message):
 
 def show_latex(message):
     try:
-        filename = generate_latex_png(message)
+        filename = __generate_latex_png(message)
         response = "This is your equation bellow:"
         return response , filename
     except Exception as e:
