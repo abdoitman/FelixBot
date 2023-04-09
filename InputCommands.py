@@ -46,7 +46,35 @@ class InputParser:
 
 class VectorsParser:
     def __init__(self, input_msg) -> None:
-        pass
+
+        validate_str_vectors(input_msg.strip())
+        self.__str_vectors_list = input_msg.split("#")
+
+        self.__vectors = []
+        self.__max_coordinate = self.__min_coordinate = 0
+
+        for vec in self.__str_vectors_list:
+
+            try:
+                temp_vec = eval(vec.strip())
+            except:
+                raise Exception("Something's wrong! Perhaps missing a `comma` or `]`?")
+            
+            self.__vectors.append(temp_vec)
+            if(max(temp_vec) >= self.__max_coordinate ): self.__max_coordinate = max(temp_vec)
+            if(min(temp_vec) <= self.__min_coordinate ): self.__min_coordinate = min(temp_vec)
+
+        validate_evaluated_vectors(self.__vectors, self.__max_coordinate, self.__min_coordinate)
+        
+    def get_vectors(self):
+        return self.__vectors
+    
+    def get_max_coordinate(self):
+        return self.__max_coordinate
+    
+    def get_min_coordinate(self):
+        return self.__min_coordinate
+    
 
 
 class MatrixParser:
