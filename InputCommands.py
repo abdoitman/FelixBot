@@ -1,4 +1,5 @@
 import re
+import numpy as np
 from validation import *
 
 class InputParser:
@@ -76,9 +77,19 @@ class VectorsParser:
         return self.__min_coordinate
     
 
-class MatrixParser:
-    def __init__(self, input_str_matrix) -> None:
-        pass
+class OptimizationMatriciesParser:
+    def __init__(self, input_str_matricies: str, opt_type: str) -> None:
+        validate_str_matricies(input_str_matricies)
+
+        self.__matricies = {}
+        for mat in input_str_matricies.split("#"):
+            name , matrix = mat.split("=")
+            try:
+                self.__matricies[name] = np.array(eval(matrix))
+            except:
+                raise Exception("Something's wrong in one of the matricies!\nPerhaps missing a `comma` or `]`?")
+        
+        validate_evaluated_matricies_dimensions(self.__matricies, opt_type)
 
 if __name__ == "__main__":
     e1 = InputParser("sin(x_1 * y_2 ) var x_1 y_2 with consats x>1")
