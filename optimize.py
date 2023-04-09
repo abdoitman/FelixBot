@@ -112,9 +112,11 @@ def __optimize_quadratic(message:str) -> str:
                   A @ x == b])
     prob.solve()
 
-    print(f"""The optimal value is {prob.value}
+    response = f"""The optimal value is {prob.value}
 A solution x is {x.value}
-A dual solution corresponding to the inequality constraints is {prob.constraints[0].dual_value}""")
+A dual solution corresponding to the inequality constraints is {prob.constraints[0].dual_value}"""
+    
+    return response
 
 def solve(message: str):
     plot = True
