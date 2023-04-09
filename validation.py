@@ -51,13 +51,15 @@ def validate_str_matricies(str_matricies: str):
 def validate_evaluated_matricies_dimensions(matricies: dict, opt_type):
 
     m_A, n_A = matricies['A'].shape
-    if matricies['b'].size != m_A: raise Exception("Size of `b` does not match the size of `A`!")
+    if matricies['b'].size != m_A: raise Exception("""Check the dimensions of `A` and `b`!
+**REMINDER**: If `A` is of size `m.n`, then `b` should be of size `m`""")
 
     match opt_type:
         case "linear":
             try:
                 if matricies['c'].size != n_A:
-                    raise Exception("Size of `c` does not match the size of `A`!")
+                    raise Exception("""Check the dimensions of `A`, `b` and `c` again!
+**REMINDER**: If `A` is of size `m.n`, then `b` should be of size `m` & c should be of size `n`""")
             except:
                 raise Exception("Missing attribute: `c`")
             
@@ -71,20 +73,22 @@ def validate_evaluated_matricies_dimensions(matricies: dict, opt_type):
 
             #check if P is symmetric or not
             if not np.array_equiv(matricies['P'], matricies["P"].T) or m_P != n_P:
-                raise Exception("Matrix P must be **symmetric** and at least **positive semi definite**.")
+                raise Exception("Matrix `P` must be **symmetric** and at least **positive semi definite**.")
 
             #check if P is positive semi definite
             if np.any(np.linalg.eigvals(matricies['P']) < 0):
                 raise Exception("Matrix `P` must be at least **positive semi-definite**!")
             
             if matricies['q'].size != m_P:
-                raise Exception("Size of `q` does not match the size of `P`!")
+                raise Exception("""Check the dimensions of `P` and `q`!
+**REMINDER**: If `P` is of size `m.m`, then `q` should also be of size `m`""")
             
             if m_G != matricies['h'].size:
-                raise Exception("Size of `h` does not match the size of `G`!")
+                raise Exception("""Check the dimensions of `G` and `h`!
+**REMINDER**: If `G` is of size `m.n`, then `h` should be of size `m`""")
             
             if n_G != n_A:
-                raise Exception("Size of `G` does not match the size of `A`!\nThe should have the same number of columns.")
+                raise Exception("Size of `G` does not match the size of `A`!\n**REMINDER**: They should have the same number of columns.")
             
         case unkown_case:
             raise Exception(f"Type `{unkown_case}` is not recognized.")
