@@ -85,3 +85,6 @@ def validate_evaluated_matricies_dimensions(matricies: dict, opt_type):
             
             if n_G != n_A:
                 raise Exception("Size of `G` does not match the size of `A`!\nThe should have the same number of columns.")
+            
+        case unkown_case:
+            raise Exception(f"Type `{unkown_case}` is not recognized.")
