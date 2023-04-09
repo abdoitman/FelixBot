@@ -50,8 +50,9 @@ def validate_str_matricies(str_matricies: str):
 
 def validate_evaluated_matricies_dimensions(matricies: dict, opt_type):
 
-    m_A, n_A = matricies['A'].shape
-    if matricies['b'].size != m_A: raise Exception("""Check the dimensions of `A` and `b`!
+    if opt_type != "quadratic":
+        m_A, n_A = matricies['A'].shape
+        if matricies['b'].size != m_A: raise Exception("""Check the dimensions of `A` and `b`!
 **REMINDER**: If `A` is of size `m.n`, then `b` should be of size `m`""")
 
     match opt_type:
@@ -68,11 +69,13 @@ def validate_evaluated_matricies_dimensions(matricies: dict, opt_type):
             
         case "quadratic":
             #check if any matrix is missing
-            if not all(var in ['P', 'q', 'G', 'h'] for var in matricies.keys()):
-                raise Exception("Missing attributes for the quadratic program\n**Reminder**: Expected matricies and vectors are: `P`, `q`, `G`, `h`, `A` and, `b`")
+            if not all(var in ['P', 'q'] for var in matricies.keys()):
+                raise Exception("""Missing attributes for the quadratic program
+**Reminder**: Necessary matricies and vectors are: `P`, `q`.
+If you want to add an **equality** constraint, add the matrix `A` and vector `b` to complete the form: `Ax = b`.
+To add an **inequality** constriant, add the matrix `G` and the vector `h` to form: `Gx <= h`""")
             
             m_P, n_P = matricies["P"].shape
-            m_G, n_G = matricies['G'].shape
 
             #check if P is symmetric or not
             if not np.array_equiv(matricies['P'], matricies["P"].T) or m_P != n_P:
@@ -86,13 +89,24 @@ def validate_evaluated_matricies_dimensions(matricies: dict, opt_type):
                 raise Exception("""Check the dimensions of `P` and `q`!
 **REMINDER**: If `P` is of size `m.m`, then `q` should also be of size `m`""")
             
-            if m_G != matricies['h'].size:
-                raise Exception("""Check the dimensions of `G` and `h`!
+            #If A is specified, b must also be given
+            if "A" in matricies.keys():
+                if "b" not in matricies.keys(): raise Exception("Missing the vector `b` to form: `Ax = b`.\nMake sure Matricies are capitalized (like `A`, `P` and, `G`) and vectors are small (like `b`, `q` and, `h`)")
+                m_A, n_A = matricies['A'].shape
+                if matricies['b'].size != m_A: raise Exception("""Check the dimensions of `A` and `b`!
+**REMINDER**: If `A` is of size `m.n`, then `b` should be of size `m`""")
+
+            #If G is specified, h must also be given
+            if "G" in matricies.keys():
+                if "h" not in matricies.keys(): raise Exception("Missing the vector `h` to form: `Gx <= h`.\nMake sure Matricies are capitalized (like `A`, `P` and, `G`) and vectors are small (like `b`, `q` and, `h`)")
+                m_G, n_G = matricies['G'].shape
+                if matricies['h'].size != m_G:
+                    raise Exception("""Check the dimensions of `G` and `h`!
 **REMINDER**: If `G` is of size `m.n`, then `h` should be of size `m`""")
-            
-            if n_G != n_A:
-                raise Exception("Size of `G` does not match the size of `A`!\n**REMINDER**: They should have the same number of columns.")
-            
+                
+                if n_G != n_A:
+                    raise Exception("Size of `G` does not match the size of `A`!\n**REMINDER**: They should have the same number of columns.")
+                
         case unkown_case:
             raise Exception(f"Type `{unkown_case}` is not recognized.")
         
