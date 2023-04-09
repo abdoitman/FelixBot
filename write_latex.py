@@ -45,3 +45,11 @@ def generate_latex_png(message):
     __save_latex_png(final_latex_expr, filename)
 
     return filename
+
+def show_latex(message):
+    try:
+        filename = generate_latex_png(message)
+        response = "This is your equation bellow:"
+        return response , filename
+    except Exception as e:
+        raise(e)
