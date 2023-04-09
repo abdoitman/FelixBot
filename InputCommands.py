@@ -76,7 +76,6 @@ class VectorsParser:
         return self.__min_coordinate
     
 
-
 class MatrixParser:
     def __init__(self, input_str_matrix) -> None:
         pass
