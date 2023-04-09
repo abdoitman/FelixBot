@@ -31,22 +31,13 @@ def __save_latex_png(latex_exp, file = 'output.png', to_white=True):
     if to_white:
         os.system( 'magick convert ./__output/tmp.png -channel RGB -negate -colorspace rgb %s' %file )
 
-def generate_latex_png(message, is_equation_only= False):
-
-    # try:
-    #     if is_equation_only:
-    #         vars, eq = get_exprs(message, is_equation_only)
-    #     else:
-    #         _, vars, eq, _ = get_exprs(message)
-    # except Exception as e:
-    #     raise(e)
+def generate_latex_png(message):
 
     latex_command = InputCommands.InputParser(message)
 
     for var in latex_command.get_variables():
         globals()[f"{var}"] = sympy.symbols(var)
     
-    # eq = __change_operations(eq)
     latex_expr =  sympy.latex(parse_expr(latex_command.get_equation()))
     
     final_latex_expr = "f({}): ".format(", ".join(latex_command.get_variables())) + latex_expr
