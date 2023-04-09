@@ -42,9 +42,9 @@ def __change_operation_to_np(eq):
     return equation
 
 
-def __modify_constraints(constraints):
+def __modify_constraints(constraints: list):
     global __signs
-    modified_constraints = []
+    modified_cons = []
     for cons in constraints:
         cons = __change_operation_to_np(cons)
         for sign, flipped_sign in __signs.items():
@@ -52,14 +52,15 @@ def __modify_constraints(constraints):
                 cons = cons.replace(sign, flipped_sign)
                 break
 
-        modified_constraints.append(cons)
+        modified_cons.append(cons)
 
-    return modified_constraints
+    return modified_cons
 
 def __imagine_2d(variables, eq, constraints):
     fixed_equation = eq.replace("**", "^")
     fixed_constraints = constraints
     var = variables[0]
+
     if var != "X":
         eq = eq.replace(var, "X")
         if constraints != 'none':
@@ -76,7 +77,7 @@ def __imagine_2d(variables, eq, constraints):
 
     X = np.arange(-20, 20, 0.05)
     Z = z_func(eq, X)
-    if constraints[0] != 'none':
+    if constraints != 'none':
         for cons in modified_constraints:
             Z[eval(cons)] = np.nan
 
