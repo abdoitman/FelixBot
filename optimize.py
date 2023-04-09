@@ -4,7 +4,8 @@ import InputCommands
 
 __operations = {"log":"cp.log",
                 "abs":"cp.abs",
-                "exp":"cp.exp"}
+                "exp":"cp.exp",
+                "sum":"cp.sum"}
 
 def __change_operation_to_cp(eq):
     global __operations
@@ -97,19 +98,36 @@ def __optimize_least_squares(message:str) -> str:
 
 def __optimize_quadratic(message:str) -> str:
     opt_problem = InputCommands.OptimizationMatriciesParser(message, "quadratic")
-    A = opt_problem.get_matrix("A")
-    b = opt_problem.get_matrix("b")
-    G = opt_problem.get_matrix("G")
-    h = opt_problem.get_matrix("h")
     P = opt_problem.get_matrix("P")
     q = opt_problem.get_matrix("q")
 
-    m_A , n_A = A.shape
+    #check for constraints first
+    if constraints := opt_problem.get_constraints():
+        str_constraints = ", ".join(constraints)
+        for symbol in ["A", 'b', "G", 'h']:
+            if symbol in str_constraints:
+                globals()[symbol] = opt_problem.get_matrix(symbol)
+        
+        try:
+            cons = [eval(__change_operation_to_cp(constraint)) for constraint in constraints]
+        except:
+            raise Exception("Please use `<=` and `>=` instead of `<` and `>`.")
 
-    x = cp.Variable(n_A)
-    prob = cp.Problem(cp.Minimize((1/2)*cp.quad_form(x, P) + q.T @ x),
-                 [G @ x <= h,
-                  A @ x == b])
+    else:
+        try:
+            A = opt_problem.get_matrix("A")
+            b = opt_problem.get_matrix("b")
+            G = opt_problem.get_matrix("G")
+            h = opt_problem.get_matrix("h")
+            
+            cons = [G @ x <= h, A @ x == b]
+        except Exception as e:
+            print(e)
+
+    m_P , n_P = P.shape
+
+    x = cp.Variable(n_P)
+    prob = cp.Problem(cp.Minimize((1/2)*cp.quad_form(x, P) + q.T @ x), cons)
     prob.solve()
 
     response = f"""The optimal value is {prob.value}
