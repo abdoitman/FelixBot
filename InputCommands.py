@@ -90,6 +90,9 @@ class OptimizationMatriciesParser:
                 raise Exception("Something's wrong in one of the matricies!\nPerhaps missing a `comma` or `]`?")
         
         validate_evaluated_matricies_dimensions(self.__matricies, opt_type)
+    
+    def get_matrix(self, symbol):
+        return self.__matricies[symbol]
 
 if __name__ == "__main__":
     e1 = InputParser("sin(x_1 * y_2 ) var x_1 y_2 with consats x>1")
