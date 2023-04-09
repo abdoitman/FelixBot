@@ -4,9 +4,9 @@ import optimize
 import check
 import re
 
-def __show_latex(message, is_equation_only= False):
+def __show_latex(message):
     try:
-        filename = write_latex.generate_latex_png(message, is_equation_only)
+        filename = write_latex.generate_latex_png(message)
         response = "This is your equation bellow:"
         return response , filename
     except Exception as e:
@@ -72,7 +72,7 @@ async def process(message, client):
     message = message.replace(command, "").strip()
 
     if command == 'show':
-        response, filename = __show_latex(message, is_equation_only=True)
+        response, filename = __show_latex(message)
         contains_media = True
         return response , contains_media , filename
     
