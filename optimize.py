@@ -49,24 +49,12 @@ def __optimize_general_functions(message:str):
     return response , drawing_command
 
 def __optimize_linear_program(message:str):
-    A, b, c = __get_attributes(message)
+    opt_problem = InputCommands.OptimizationMatriciesParser(message, "linear")
+    A = opt_problem.get_matrix("A")
+    b = opt_problem.get_matrix("b")
+    c = opt_problem.get_matrix("c")
 
-    try:
-        A = np.array(eval(A))
-        b = np.array(eval(b))
-        c = np.array(eval(c))
-    except:
-        raise Exception("Error reading A & b")
-
-    try:
-        m, n = A.shape
-    except:
-        m = 1
-        n = A.size
-
-    if b.size != m or c.size != n:
-        raise Exception("""Check the dimensions of A, b and c again!
-**REMINDER**: If A is of size `m.n`, then b should be of size `m` & c should be of size `n`""")
+    m , n = A.shape
 
     x = cp.Variable(n)
     prob = cp.Problem(cp.Minimize(c.T@x),
@@ -90,17 +78,13 @@ Optimal value of x is {x.value}"""
     return response, drawing_func
 
 def __optimize_least_squares(message:str) -> str:
-    A, b, _ = __get_attributes(message)
+    opt_problem = InputCommands.OptimizationMatriciesParser(message, "ls")
+    A = opt_problem.get_matrix("A")
+    b = opt_problem.get_matrix("b")
 
-    try:
-        A = np.array(eval(A))
-        b = np.array(eval(b))
-    except:
-        raise Exception("Error reading A & b")
+    m , n = A.shape
 
-    m, n = A.shape
 
-    if b.size != m: raise Exception("Check the dimensions of A and b again!")
     x = cp.Variable(n)
     ls_func = cp.sum_squares(A @ x - b)
     prob = cp.Problem(cp.Minimize(ls_func))
