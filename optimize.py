@@ -84,7 +84,6 @@ def __optimize_least_squares(message:str) -> str:
 
     m , n = A.shape
 
-
     x = cp.Variable(n)
     ls_func = cp.sum_squares(A @ x - b)
     prob = cp.Problem(cp.Minimize(ls_func))
@@ -97,7 +96,25 @@ def __optimize_least_squares(message:str) -> str:
     return response
 
 def __optimize_quadratic(message:str) -> str:
-    pass
+    opt_problem = InputCommands.OptimizationMatriciesParser(message, "quadratic")
+    A = opt_problem.get_matrix("A")
+    b = opt_problem.get_matrix("b")
+    G = opt_problem.get_matrix("G")
+    h = opt_problem.get_matrix("h")
+    P = opt_problem.get_matrix("P")
+    q = opt_problem.get_matrix("q")
+
+    m_A , n_A = A.shape
+
+    x = cp.Variable(n_A)
+    prob = cp.Problem(cp.Minimize((1/2)*cp.quad_form(x, P) + q.T @ x),
+                 [G @ x <= h,
+                  A @ x == b])
+    prob.solve()
+
+    print(f"""The optimal value is {prob.value}
+A solution x is {x.value}
+A dual solution corresponding to the inequality constraints is {prob.constraints[0].dual_value}""")
 
 def solve(message: str):
     plot = True
