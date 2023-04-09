@@ -1,6 +1,6 @@
 import numpy as np
 import cvxpy as cp
-import re
+import InputCommands
 
 __operations = {"log":"cp.log",
                 "abs":"cp.abs",
@@ -14,39 +14,11 @@ def __change_operation_to_cp(eq):
 
     return equation
 
-def __get_exprs(message):
-    try:
-        eq = re.findall(r".+?(?=var)", message)[0].strip()
-        variables = re.findall(r"(?<=var).*(?=w)", message)[0].strip().split()
-        constraints = re.findall(r"(?<=ts).*", message)[0].strip().split(',')
-    except:
-        raise Exception("Missing attributes!")
-
-    return variables, eq, constraints
-
-def __get_attributes(message):
-    message = message.replace(" ","")
-    if "c" in message:
-        try:
-            A = re.findall(r"(?<=A=).*?(?=#)", message)[0].strip()
-            b = re.findall(r"(?<=b=).*(?=#)", message)[0].strip()
-            c = re.findall(r"(?<=#c=).*", message)[0].strip()
-        except:
-            raise Exception("Missing attributes!")
-        
-    else:
-        try:
-            A = re.findall(r"(?<=A=).*(?=#)", message)[0].strip()
-            b = re.findall(r"(?<=b=).*", message)[0].strip()
-        except:
-            raise Exception("Missing attributes!")
-
-    return A, b, c
-
 def __optimize_general_functions(message:str):
-    variables, eq, constraints = __get_exprs(message)
-    fixed_eq, fixed_var, fixed_constraints = eq, " ".join(variables), ",".join(constraints)
-    drawing_command = f"equation {fixed_eq} var {fixed_var} with constraints {fixed_constraints}"
+    opt_problem = InputCommands.InputParser(message)
+    equation, variables, constraints = opt_problem.get_equation(), opt_problem.get_variables(), opt_problem.get_constraints()
+
+    drawing_command = "equation " + message
 
     for var in variables:
         globals()[f"{var}"] = cp.Variable()
@@ -58,8 +30,8 @@ def __optimize_general_functions(message:str):
         raise Exception("Please use `<=` and `>=` instead of `<` and `>`.")
     
     try:
-        eq = __change_operation_to_cp(eq)
-        obj = cp.Minimize(eval(eq))
+        equation = __change_operation_to_cp(equation)
+        obj = cp.Minimize(eval(equation))
     except Exception as e:
         print(e)
         raise Exception("Review your equation again as some functions are not convex and not supported in CVX such as: `sin`, `cos` and `tan`")
@@ -164,8 +136,8 @@ def solve(message: str):
             response = __optimize_least_squares(message[2:])
             return response, ""
         
-        case "quad":
-            response = __optimize_quadratic(message[4:])
+        case "quadratic":
+            response = __optimize_quadratic(message[9:])
             return response, ""
         
         case opt_type:
