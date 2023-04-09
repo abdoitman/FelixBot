@@ -55,6 +55,9 @@ def validate_evaluated_matricies_dimensions(matricies: dict, opt_type):
 **REMINDER**: If `A` is of size `m.n`, then `b` should be of size `m`""")
 
     match opt_type:
+        case "ls":
+            pass
+
         case "linear":
             try:
                 if matricies['c'].size != n_A:
