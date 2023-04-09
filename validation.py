@@ -88,3 +88,6 @@ def validate_evaluated_matricies_dimensions(matricies: dict, opt_type):
             
         case unkown_case:
             raise Exception(f"Type `{unkown_case}` is not recognized.")
+        
+    def get_matrix(self, symbol):
+        return self.__matricies[symbol]
