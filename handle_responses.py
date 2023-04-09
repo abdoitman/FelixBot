@@ -10,7 +10,7 @@ async def process(message, client):
     message = message.replace(command, "").strip()
 
     if command == 'show':
-        if message.startswith("var"): raise Exception("**NOTE**: This is and old way of typing this command.\nNow it's `f::show [equation] var [variables]`")
+        if message.startswith("var"): raise Exception("**NOTE**: This is an old way of typing this command.\nNow it's `f::show [equation] var [variables]`")
         response, filename = write_latex.show_latex(message)
         contains_media = True
         return response , contains_media , filename
