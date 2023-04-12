@@ -100,6 +100,7 @@ def __optimize_quadratic(message:str) -> str:
     opt_problem = InputCommands.OptimizationMatriciesParser(message, "quadratic")
     P = opt_problem.get_matrix("P")
     q = opt_problem.get_matrix("q")
+    problem_constraints = []
 
     #check for constraints first
     if constraints := opt_problem.get_constraints():
@@ -110,24 +111,33 @@ def __optimize_quadratic(message:str) -> str:
         
         try:
             cons = [eval(__change_operation_to_cp(constraint)) for constraint in constraints]
+            problem_constraints += cons
         except:
-            raise Exception("Please use `<=` and `>=` instead of `<` and `>`.")
+            raise Exception("Something's wrong in the constraints!\nPlease use `<=` and `>=` instead of `<` and `>`.")
 
     else:
         try:
             A = opt_problem.get_matrix("A")
             b = opt_problem.get_matrix("b")
+                        
+            cons = A @ x == b
+            problem_constraints.append(cons)
+        except Exception as e:
+            print(e)
+        
+        try:
             G = opt_problem.get_matrix("G")
             h = opt_problem.get_matrix("h")
-            
-            cons = [G @ x <= h, A @ x == b]
+
+            cons = G @ x <= h
+            problem_constraints.append(cons)
         except Exception as e:
             print(e)
 
     m_P , n_P = P.shape
 
     x = cp.Variable(n_P)
-    prob = cp.Problem(cp.Minimize((1/2)*cp.quad_form(x, P) + q.T @ x), cons)
+    prob = cp.Problem(cp.Minimize((1/2)*cp.quad_form(x, P) + q.T @ x), problem_constraints)
     prob.solve()
 
     response = f"""The optimal value is {prob.value}
