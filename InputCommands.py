@@ -82,20 +82,24 @@ class OptimizationMatriciesParser:
         validate_str_matricies(input_str_matricies)
 
         self.__matricies = {}
+
         for mat in input_str_matricies.split("#"):
-            name , matrix = mat.split("=")
-            try:
-                self.__matricies[name.strip()] = np.array(eval(matrix.strip()))
-            except:
-                raise Exception("Something's wrong in one of the matricies!\nPerhaps missing a `comma` or `]`?")
-            
-        if "constraints" in input_str_matricies:
-            self.__constraints: list = self.__matricies["constraints"]
-        
+            if mat.split("=")[0].strip() == "constraints":
+                mat = mat.replace(" ", "")
+                self.__constraints: list = mat[12:]
+
+            else:
+                name, value = mat.split("=")
+                try:
+                    self.__matricies[name.strip()] = np.array(eval(value.strip()))
+                except:
+                    raise Exception("Something's wrong in one of the matricies!\nPerhaps missing a `comma` or `]`?")
+                        
+
         validate_evaluated_matricies_dimensions(self.__matricies, opt_type)
     
-    def get_matrix(self, symbol):
-        return self.__matricies[symbol]
+    def get_matrix(self):
+        return self.__matricies
     
     def get_constraints(self):
         try:
@@ -104,5 +108,5 @@ class OptimizationMatriciesParser:
             return False
 
 if __name__ == "__main__":
-    e1 = InputParser("sin(x_1 * y_2 ) var x_1 y_2 with constraints sum(x_1) = 1")
-    print(e1.get_equation(), e1.get_variables(), e1.get_constraints())
+    e1 = OptimizationMatriciesParser("P = [[5, 1], [1,5]] # q = [2, 3] # constraints = [sum(x) >= 1]", "quadratic")
+    print(e1.get_matrix(), e1.get_constraints())
