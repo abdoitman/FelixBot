@@ -98,7 +98,7 @@ class OptimizationMatriciesParser:
 
         validate_evaluated_matricies_dimensions(self.__matricies, opt_type)
     
-    def get_matrix(self):
+    def get_matricies(self):
         return self.__matricies
     
     def get_constraints(self):
@@ -109,4 +109,4 @@ class OptimizationMatriciesParser:
 
 if __name__ == "__main__":
     e1 = OptimizationMatriciesParser("P = [[5, 1], [1,5]] # q = [2, 3] # a= [5, 1] # constraints = [sum(x) >= 1]", "quadratic")
-    print(e1.get_matrix(), e1.get_constraints())
+    print(e1.get_matricies(), e1.get_constraints())
