@@ -61,6 +61,20 @@ def validate_evaluated_matricies_dimensions(matricies: dict, opt_type):
 
         case "linear":
             try:
+                if "c" not in matricies.keys():
+                    raise Exception("""Missing attributes for the `linear` program
+**Reminder**: Necessary matrix or vector is: `c`.""")
+
+                if "b" in matricies.keys() and "A" not in matricies.keys():
+                    raise Exception("Missing the matrix `A` to form: `Ax <= b`.\nMake sure Matricies are capitalized (like `A`) and vectors are small (like `b`)")
+                
+                if "A" in matricies.keys():
+                    if "b" not in matricies.keys():
+                        raise Exception("Missing the vector `b` to form: `Ax <= b`.\nMake sure Matricies are capitalized (like `A`) and vectors are small (like `b`)")
+                    m_A, n_A = matricies['A'].shape
+                    if matricies['b'].size != m_A: raise Exception("""Check the dimensions of `A` and `b`!
+**REMINDER**: If `A` is of size `m.n`, then `b` should be of size `m`""")
+
                 if matricies['c'].size != n_A:
                     raise Exception("""Check the dimensions of `A`, `b` and `c` again!
 **REMINDER**: If `A` is of size `m.n`, then `b` should be of size `m` & c should be of size `n`""")
@@ -70,7 +84,7 @@ def validate_evaluated_matricies_dimensions(matricies: dict, opt_type):
         case "quadratic":
             #check if any matrix is missing
             if "P" not in matricies.keys() or "q" not in matricies.keys():
-                raise Exception("""Missing attributes for the quadratic program
+                raise Exception("""Missing attributes for the `quadratic` program
 **Reminder**: Necessary matricies and vectors are: `P`, `q`.
 If you want to add an **equality** constraint, add the matrix `A` and vector `b` to complete the form: `Ax = b`.
 To add an **inequality** constriant, add the matrix `G` and the vector `h` to form: `Gx <= h`""")
