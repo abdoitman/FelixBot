@@ -108,5 +108,5 @@ class OptimizationMatriciesParser:
             return False
 
 if __name__ == "__main__":
-    e1 = OptimizationMatriciesParser("P = [[5, 1], [1,5]] # q = [2, 3] # constraints = [sum(x) >= 1]", "quadratic")
+    e1 = OptimizationMatriciesParser("P = [[5, 1], [1,5]] # q = [2, 3] # a= [5, 1] # constraints = [sum(x) >= 1]", "quadratic")
     print(e1.get_matrix(), e1.get_constraints())
