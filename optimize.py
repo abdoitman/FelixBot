@@ -53,7 +53,10 @@ def __optimize_linear_program(message:str):
     opt_problem = InputCommands.OptimizationMatriciesParser(message, "linear")
     matricies = opt_problem.get_matricies()
     c = matricies["c"]
-    m , n = c.shape
+    try:
+        m , n = c.shape
+    except:
+        n = c.size
     x = cp.Variable(n)
     problem_constraints = []
 
