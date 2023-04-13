@@ -2,12 +2,11 @@ def show_guide():
     guide1 = """Hey everyone! I'm here to assist you with understanding optimization problems.
 Here are the available commands right now
 [Remember: all my commands start with `f::`]:
-```f::show var x y # equation```This is used to display **written equation in a better way**.
+```f::show ... var ...```This is used to display **written equation in a better way**.
     - `f::show` to specify the command.
     - State the variables in the equations using `var:`.
-    - Separate with `#`, then write your equation.
-    `ex` f::show var x z # sin(x)+cos(z)
-    `ex` f::show var x_1 x_2 f # log(x_1) / sqrt(x_2 \* sin(2 \* pi * f))
+    `ex` f::show sin(x)+cos(z) var x z
+    `ex` f::show log(x_1) / sqrt(x_2 \* sin(2 \* pi * f)) var x_1 x_2 f
 ```f::imagine```This is used to display **vector**, **a set of vectors**, or **an equation with/without constraints**.
     You have **multiple options** to draw as follows:
 
@@ -24,15 +23,15 @@ Here are the available commands right now
         - Currently this command takes a minute to send the results.
         - Use `var` keyword to specify the variables in the equation.
         - If you want to draw an equation with no constraints, **don't add any**.
-            `ex` f::imagine equation 3 \* x_1\*\*2 var x_1"""
-
-    guide2= """```f::optimize```This is used to **solve some optimization problems.**
+            `ex` f::imagine equation 3 \* x_1\*\*2 var x_1
+```f::optimize```This is used to **solve some optimization problems.**
     To specify the type of equation you want to solve, use one of the following commands:
 
     - `f::optimize func ... var ... with constraints ...` solves **general optimization problems**
     `ex` f::optimize func 3 \* x_1 - 5 \* x_2 var x_1 x_2 with constraints x_1 >= 0, x_2 <= 5
-    **For better understanding**: You can plot the function - if possible -, `!func` instead of `func`.
-
+    **For better understanding**: You can plot the function - if possible -, `!func` instead of `func`."""
+    
+    guide2= """
     - `f::optimize linear A = [...] # b = [...] # c = [...]` solves **LP optimization problems**
     `ex` f::optimize linear A = [[1, 2], [2, 0]] # b= [1, 1] # c= [3, -2]
     **For better understanding**: You can plot the function - if possible -, type `!linear` instead of `linear`.
