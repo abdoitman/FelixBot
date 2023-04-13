@@ -68,7 +68,7 @@ To specify the type of equation you want to solve, use one of the following comm
 
 **(1)** `f::optimize func ... var ... with constraints ...` solves **general optimization problems**
     `ex` f::optimize func 3 \* x_1 - 5 \* x_2 var x_1 x_2 with constraints x_1 >= 0, x_2 <= 5
-    **For better understanding**: If possible, you can plot the function using `!func` instead of `func`.
+    **For better understanding**: If possible, you can plot the objective function using `!func` instead of `func`.
 
 **(2)** `f::optimize linear A = [...] # b = [...] # c = [...]` solves **LP optimization problems**
     **REMINDER**: LP problems take the following form:
@@ -93,7 +93,7 @@ When specifying the matricies and vectors of the problem, you can define any mat
     `ex` f::optimize ls A = [3, -4] # b = [0]"""
 
     check_guide = """```f::check```This is used to **check on some properties** The available tests right now are:
-    
+
 `f::check dt [ [...] , [...] ]` which checks the **definite type** of a matrix and returns its **eigenvalues**.
 **NOTE**: The matrix has to be **square** and **symmetric**.
     `ex` f::check dt [ [2, 1] , [1, 2] ]"""
