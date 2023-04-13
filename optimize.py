@@ -10,8 +10,8 @@ __operations = {"log":"cp.log",
 def __change_operation_to_cp(eq):
     global __operations
     equation = eq
-    for operator, np_operator in __operations.items():
-        equation = equation.replace(operator, np_operator)
+    for operator, cp_operator in __operations.items():
+        equation = equation.replace(operator, cp_operator)
 
     return equation
 
@@ -80,8 +80,9 @@ Optimal value of x is {x.value}"""
 
 def __optimize_least_squares(message:str) -> str:
     opt_problem = InputCommands.OptimizationMatriciesParser(message, "ls")
-    A = opt_problem.get_matrix("A")
-    b = opt_problem.get_matrix("b")
+    matricies = opt_problem.get_matricies()
+    A = matricies["A"]
+    b = matricies["b"]
 
     m , n = A.shape
 
@@ -98,22 +99,25 @@ def __optimize_least_squares(message:str) -> str:
 
 def __optimize_quadratic(message:str) -> str:
     opt_problem = InputCommands.OptimizationMatriciesParser(message, "quadratic")
-    P = opt_problem.get_matrix("P")
-    q = opt_problem.get_matrix("q")
+    matricies = opt_problem.get_matricies()
+    P = matricies["P"]
+    q = matricies["q"]
+    m_P , n_P = P.shape
     x = cp.Variable(n_P)
     problem_constraints = []
 
     #defining the matricies
-    for name, value in opt_problem.get_matrix().items():
+    for name, value in matricies.items():
         globals()[name] = value
 
     #check for constraints first
     if constraints := opt_problem.get_constraints():
         try:
-            evaluated_constraints = [eval(__change_operation_to_cp(constraint)) for constraint in constraints]
-            problem_constraints += evaluated_constraints
-        except:
-            raise Exception("Something's wrong in the constraints!\nTry using `<=` and `>=` instead of `<` and `>`.")
+            for constraint in constraints:
+                problem_constraints += [eval(__change_operation_to_cp(constraint))]
+        except Exception as e:
+            print(e)
+            raise Exception("Something's wrong with the constraints!\nTry using `<=`, `>=` and `==` instead of `<`, `>` and `=`.")
 
     try:        
         cons = globals()["A"] @ x == globals()["b"]
@@ -126,8 +130,6 @@ def __optimize_quadratic(message:str) -> str:
         problem_constraints.append(cons)
     except Exception as e:
         print(e)
-
-    m_P , n_P = P.shape
 
     prob = cp.Problem(cp.Minimize((1/2)*cp.quad_form(x, P) + q.T @ x), problem_constraints)
     prob.solve()
