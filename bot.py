@@ -64,10 +64,11 @@ def run_discord_bot():
 
         if (user_message[0:3] == 'f::'):
             await client.change_presence(status=discord.Status.do_not_disturb, activity=discord. Activity(type=discord.ActivityType.watching, name='Magic happens'))
+            #Logging
             with open("logger.txt", "a") as logger:
                 ctime = datetime.now()
                 str_ctime = ctime.strftime("%Y-%m-%d %H:%M:%S")
-                log = f"{str_ctime} -> {str(message.author)}: {user_message}"
+                log = f"{str_ctime} | [{channel}] -> {str(message.author)}: {user_message}"
                 logger.write(log + "\n")
 
             user_message = user_message[3:].strip()
