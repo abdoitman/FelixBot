@@ -83,18 +83,8 @@ def __optimize_linear_program(message:str):
     response = f"""Problem solution is {prob.status}
 The optimal value is {prob.value}
 Optimal value of x is {x.value}"""
-
-    try:
-        if m == 1 and n == 1 and c[0] !=0:
-            drawing_func = f"equation {c[0]} * x_1 var x_1 with constraints {globals()['A'][0]} * x_1 <= {globals()['b'][0]}"
-        elif m == 1 and n == 2 and (c[0] != 0 or c[1] != 0):
-            drawing_func = f"equation {c[0]} * x_1 + {c[1]} * x_2 var x_1 x_2 with constraints {globals()['A'][0]} * x_1 + {globals()['A'][1]} * x_2 <= {globals()['b'][0]}"
-        else:
-            drawing_func = ""
-    except:
-        raise Exception("If A is a vector not a matrix, write it as `[...]` not `[[...]]`")
     
-    return response, drawing_func
+    return response
 
 def __optimize_least_squares(message:str) -> str:
     opt_problem = InputCommands.OptimizationMatriciesParser(message, "ls")
@@ -113,6 +103,7 @@ def __optimize_least_squares(message:str) -> str:
     The optimal value is {prob.value}
     Optimal value of x is {x.value}
     The norm of the residual is {norm_value}"""
+
     return response
 
 def __optimize_quadratic(message:str) -> str:
@@ -171,9 +162,8 @@ def solve(message: str):
             else: return response, ""
         
         case "linear":
-            response, func = __optimize_linear_program(message[6:])
-            if plot: return response, func
-            else: return response, ""
+            response = __optimize_linear_program(message[6:])
+            return response, ""
         
         case "ls":
             response = __optimize_least_squares(message[2:])
