@@ -60,6 +60,13 @@ def validate_evaluated_matricies_dimensions(matricies: dict, opt_type):
             if "c" not in matricies.keys():
                raise Exception("""Missing attributes for the `linear` program
 **Reminder**: Necessary matrix or vector is: `c`.""")
+            
+            #checks if c is a matrix
+            try:
+                m , n = matricies['c'].shape
+                raise Exception("`c` must be a vector!")
+            except:
+                pass
 
             if "b" in matricies.keys() and "A" not in matricies.keys():
                 raise Exception("Missing the matrix `A` to form: `Ax <= b`.\nMake sure Matricies are capitalized (like `A`) and vectors are small (like `b`)")
