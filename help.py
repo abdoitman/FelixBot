@@ -34,7 +34,6 @@ Here are the available commands right now
     guide2= """
     - `f::optimize linear A = [...] # b = [...] # c = [...]` solves **LP optimization problems**
     `ex` f::optimize linear A = [[1, 2], [2, 0]] # b= [1, 1] # c= [3, -2]
-    **For better understanding**: You can plot the function - if possible -, type `!linear` instead of `linear`.
     **REMINDER**: LP problems take the following form:  `minimize c.T*X subject to A*X <= b`
         
     - `f::optimize quadratic P = [...] # q = [...] # ...` solves **quadratic optimization problems**
