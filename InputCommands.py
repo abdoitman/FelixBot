@@ -86,7 +86,7 @@ class OptimizationMatriciesParser:
         for mat in input_str_matricies.split("#"):
             if mat.split("=")[0].strip() == "constraints":
                 mat = mat.replace(" ", "")
-                self.__constraints: list = mat[12:]
+                self.__constraints: list = mat[13:-1].split(",")
 
             else:
                 name, value = mat.split("=")
