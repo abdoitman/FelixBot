@@ -156,9 +156,9 @@ A dual solution corresponding to the inequality constraints is {prob.constraints
     return response
 
 def solve(message: str):
-    plot = True
+    plot = False
     if message.strip()[0] == "!":
-        plot = False
+        plot = True
         message = message[1:]
     optimize_prob = message.strip().split()[0]
     match optimize_prob:
