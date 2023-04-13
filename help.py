@@ -23,26 +23,34 @@ Here are the available commands right now
     **IMPORTANT NOTES**:
         - Currently this command takes a minute to send the results.
         - Use `var` keyword to specify the variables in the equation.
-        - If you want to draw an equation with no constraints, use the keyword `none`.
-            `ex` f::imagine equation 3 \* x_1\*\*2 var x_1 with constraints none."""
+        - If you want to draw an equation with no constraints, **don't add any**.
+            `ex` f::imagine equation 3 \* x_1\*\*2 var x_1"""
 
     guide2= """```f::optimize```This is used to **solve some optimization problems.**
     To specify the type of equation you want to solve, use one of the following commands:
 
     - `f::optimize func ... var ... with constraints ...` solves **general optimization problems**
     `ex` f::optimize func 3 \* x_1 - 5 \* x_2 var x_1 x_2 with constraints x_1 >= 0, x_2 <= 5
-    **For better understanding**: This function also graphs the equation *automatically*, to disable this feature type `!func` instead of `func`.
+    **For better understanding**: You can plot the function - if possible -, `!func` instead of `func`.
 
-    - `f::optimize linear A = [...] # b= [...] # c= [...]` solves **LP optimization problems**
+    - `f::optimize linear A = [...] # b = [...] # c = [...]` solves **LP optimization problems**
     `ex` f::optimize linear A = [[1, 2], [2, 0]] # b= [1, 1] # c= [3, -2]
-    **For better understanding**: This function also graphs the equation *automatically*, to disable this feature type `!linear` instead of `linear`.
+    **For better understanding**: You can plot the function - if possible -, type `!linear` instead of `linear`.
     **REMINDER**: LP problems take the following form:  `minimize c.T*X subject to A*X <= b`
         
+    - `f::optimize quadratic P = [...] # q = [...] # ...` solves **quadratic optimization problems**
+    `ex` f::optimize quadratic P = [[1, 2], [2, 1]] # b= [0, 0] # constraints = [sum(x) == 1]
+    **For better understanding**: You can plot the function - if possible -, type `!linear` instead of `linear`.
+    **REMINDER**: Standard QP problems take the following form:  `minimize (1/2)x.T * P * x + q.T x subject to A*X = b , Gx <= h`
+
+    **NEW**: For LP and QP problems, you can now add **custom constraints** to your problem not just the standard form!
+    When specifying the matricies and vectors of the problem, define any matrix or vector you want and define the constraints in `constraints = [...]`
+    **IMPORTANT NOTE**: Matricies `A`, `P`, `G` and vectors `b`, `c`, `h`, `q` are *reserved*, so to aviod any errors name your vectors any thing else
+    `ex` f::optimize linear c= [3, -2] # constraints = [sum(x) == 1]
+    `ex` f::optimize quadratic P = [[1, 2], [2, 1]] # b= [0, 0] # constraints = [sum(x) == 1, x >= 0]
+
     - `f::optimize ls A = [...] # b = [...]` solves **least squares problems**
     `ex` f::optimize ls A = [3, -4] # b = [0]
-    **REMINDER**: Least squares problems is where you have measurement matrix `A` and a seek vector `x` and `Ax` is close to `b`.
-                This closeness is defined as the sum of the squared differences, or the **second norm** of `Ax - b`.
-                The objective in this problem is to minimize the seek vector `x` to get the smallest squared difference.
 ```f::check```This is used to **check on some properties.** The available tests right now are:
 
     - `f::check dt [ [...] , [...] ]` which checks the **definite type** of a matrix and returns its **eigenvalues**.
