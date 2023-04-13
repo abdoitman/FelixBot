@@ -20,8 +20,6 @@ async def process_message(user, channel, user_message, client):
     try:
         response, contains_media, filename = await handle_responses.process(user_message, client)
         await send_message_to_channel(user.id, channel, response)
-        if filename[-4:] not in [".png", ".mp4"] and filename != "":
-            await send_message_to_channel("", channel, filename)
         if contains_media:
             await channel.send("Uploading...")
             await channel.send(f"Requested by **{str(user)}**", file=discord.File(filename))
