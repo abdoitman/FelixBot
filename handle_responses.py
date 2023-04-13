@@ -35,8 +35,9 @@ async def process(message, client):
         return response, contains_media, ""
 
     if command == 'help':
-        response1, response2 = help.show_guide()
-        return response1 , contains_media , response2
+        if message != "": response = help.show_specific_guide(message)
+        else: response = help.show_general_guide()
+        return response , contains_media , ""
     
     if message != "" and command + " " + message.split()[0] == "solve sheet":
         response = "https://tenor.com/bhDEJ.gif"
