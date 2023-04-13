@@ -50,36 +50,31 @@ def validate_str_matricies(str_matricies: str):
 
 def validate_evaluated_matricies_dimensions(matricies: dict, opt_type):
 
-    if opt_type != "quadratic":
-        m_A, n_A = matricies['A'].shape
-        if matricies['b'].size != m_A: raise Exception("""Check the dimensions of `A` and `b`!
-**REMINDER**: If `A` is of size `m.n`, then `b` should be of size `m`""")
-
     match opt_type:
         case "ls":
-            pass
+            m_A, n_A = matricies['A'].shape
+            if matricies['b'].size != m_A: raise Exception("""Check the dimensions of `A` and `b`!
+**REMINDER**: If `A` is of size `m.n`, then `b` should be of size `m`""")
 
         case "linear":
-            try:
-                if "c" not in matricies.keys():
-                    raise Exception("""Missing attributes for the `linear` program
+            if "c" not in matricies.keys():
+               raise Exception("""Missing attributes for the `linear` program
 **Reminder**: Necessary matrix or vector is: `c`.""")
 
-                if "b" in matricies.keys() and "A" not in matricies.keys():
-                    raise Exception("Missing the matrix `A` to form: `Ax <= b`.\nMake sure Matricies are capitalized (like `A`) and vectors are small (like `b`)")
+            if "b" in matricies.keys() and "A" not in matricies.keys():
+                raise Exception("Missing the matrix `A` to form: `Ax <= b`.\nMake sure Matricies are capitalized (like `A`) and vectors are small (like `b`)")
                 
-                if "A" in matricies.keys():
-                    if "b" not in matricies.keys():
-                        raise Exception("Missing the vector `b` to form: `Ax <= b`.\nMake sure Matricies are capitalized (like `A`) and vectors are small (like `b`)")
-                    m_A, n_A = matricies['A'].shape
-                    if matricies['b'].size != m_A: raise Exception("""Check the dimensions of `A` and `b`!
+            if "A" in matricies.keys():
+                if "b" not in matricies.keys():
+                    raise Exception("Missing the vector `b` to form: `Ax <= b`.\nMake sure Matricies are capitalized (like `A`) and vectors are small (like `b`)")
+                m_A, n_A = matricies['A'].shape
+                if matricies['b'].size != m_A: raise Exception("""Check the dimensions of `A` and `b`!
 **REMINDER**: If `A` is of size `m.n`, then `b` should be of size `m`""")
 
                 if matricies['c'].size != n_A:
                     raise Exception("""Check the dimensions of `A`, `b` and `c` again!
 **REMINDER**: If `A` is of size `m.n`, then `b` should be of size `m` & c should be of size `n`""")
-            except:
-                raise Exception("Missing attribute: `c`")
+            
             
         case "quadratic":
             #check if any matrix is missing
