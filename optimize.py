@@ -77,7 +77,7 @@ def __optimize_linear_program(message:str):
     prob = cp.Problem(cp.Minimize(c.T@x), problem_constraints)
     prob.solve()
 
-    if x.value != None:
+    if prob.status == "optimal":
         response = f"""Problem solution is {prob.status}
 The optimal value is {round(prob.value, 3)}
 Optimal value of x is {[round(x_n, 3) for x_n in x.value]}"""
@@ -101,7 +101,7 @@ def __optimize_least_squares(message:str) -> str:
     prob = cp.Problem(cp.Minimize(ls_func))
     prob.solve()
     norm_value = cp.norm(A @ x - b, p=2).value
-    if x.value != None:
+    if prob.status == "optimal":
         response = f"""Problem solution is {prob.status}
 The optimal value is {round(prob.value, 3)}
 Optimal value of x is {[round(x_n, 3) for x_n in x.value]}
@@ -151,7 +151,7 @@ def __optimize_quadratic(message:str) -> str:
     prob = cp.Problem(cp.Minimize((1/2)*cp.quad_form(x, P) + q.T @ x), problem_constraints)
     prob.solve()
 
-    if x.value != None:
+    if prob.status == "optimal":
         response = f"""The optimal value is {round(prob.value, 3)}
 A solution x is {[round(x_n, 3) for x_n in x.value]}
 A dual solution corresponding to the inequality constraints is {[round(x_n, 3) for x_n in prob.constraints[0].dual_value]}"""
