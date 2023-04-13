@@ -77,9 +77,14 @@ def __optimize_linear_program(message:str):
     prob = cp.Problem(cp.Minimize(c.T@x), problem_constraints)
     prob.solve()
 
-    response = f"""Problem solution is {prob.status}
+    if x.value != None:
+        response = f"""Problem solution is {prob.status}
+The optimal value is {round(prob.value, 3)}
+Optimal value of x is {[round(x_n, 3) for x_n in x.value]}"""
+    else:
+        response = f"""Problem solution is {prob.status}
 The optimal value is {prob.value}
-Optimal value of x is {x.value}"""
+Optimal value of x is {x.value}"""        
     
     return response
 
@@ -96,10 +101,16 @@ def __optimize_least_squares(message:str) -> str:
     prob = cp.Problem(cp.Minimize(ls_func))
     prob.solve()
     norm_value = cp.norm(A @ x - b, p=2).value
-    response = f"""Problem solution is {prob.status}
-    The optimal value is {prob.value}
-    Optimal value of x is {x.value}
-    The norm of the residual is {norm_value}"""
+    if x.value != None:
+        response = f"""Problem solution is {prob.status}
+The optimal value is {round(prob.value, 3)}
+Optimal value of x is {[round(x_n, 3) for x_n in x.value]}
+The norm of the residual is {round(norm_value, 3)}"""
+    else:
+        response = f"""Problem solution is {prob.status}
+The optimal value is {prob.value}
+Optimal value of x is {x.value}
+The norm of the residual is {norm_value}"""
 
     return response
 
@@ -140,9 +151,14 @@ def __optimize_quadratic(message:str) -> str:
     prob = cp.Problem(cp.Minimize((1/2)*cp.quad_form(x, P) + q.T @ x), problem_constraints)
     prob.solve()
 
-    response = f"""The optimal value is {prob.value}
+    if x.value != None:
+        response = f"""The optimal value is {round(prob.value, 3)}
+A solution x is {[round(x_n, 3) for x_n in x.value]}
+A dual solution corresponding to the inequality constraints is {[round(x_n, 3) for x_n in prob.constraints[0].dual_value]}"""
+    else:
+        response = f"""The optimal value is {prob.value}
 A solution x is {x.value}
-A dual solution corresponding to the inequality constraints is {prob.constraints[0].dual_value}"""
+A dual solution corresponding to the inequality constraints is {prob.constraints[0].dual_value}"""        
     
     return response
 
