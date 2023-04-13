@@ -51,15 +51,30 @@ def __optimize_general_functions(message:str):
 
 def __optimize_linear_program(message:str):
     opt_problem = InputCommands.OptimizationMatriciesParser(message, "linear")
-    A = opt_problem.get_matrix("A")
-    b = opt_problem.get_matrix("b")
-    c = opt_problem.get_matrix("c")
-
-    m , n = A.shape
-
+    matricies = opt_problem.get_matricies()
+    c = matricies["c"]
+    m , n = c.shape
     x = cp.Variable(n)
-    prob = cp.Problem(cp.Minimize(c.T@x),
-                    [A @ x <= b])
+    problem_constraints = []
+
+    for name, value in matricies.items():
+        globals()[name] = value
+    
+    if constraints := opt_problem.get_constraints():
+        try:
+            for constraint in constraints:
+                problem_constraints += [eval(__change_operation_to_cp(constraint))]
+        except Exception as e:
+            print(e)
+            raise Exception("Something's wrong with the constraints!\nTry using `<=`, `>=` and `==` instead of `<`, `>` and `=`.")
+    
+    try:
+        cons = globals()['A'] @ x <= globals()['b']
+        problem_constraints.append(cons)
+    except Exception as e:
+        print(e)
+    
+    prob = cp.Problem(cp.Minimize(c.T@x), problem_constraints)
     prob.solve()
 
     response = f"""Problem solution is {prob.status}
@@ -68,9 +83,9 @@ Optimal value of x is {x.value}"""
 
     try:
         if m == 1 and n == 1 and c[0] !=0:
-            drawing_func = f"equation {c[0]} * x_1 var x_1 with constraints {A[0]} * x_1 <= {b[0]}"
+            drawing_func = f"equation {c[0]} * x_1 var x_1 with constraints {globals()['A'][0]} * x_1 <= {globals()['b'][0]}"
         elif m == 1 and n == 2 and (c[0] != 0 or c[1] != 0):
-            drawing_func = f"equation {c[0]} * x_1 + {c[1]} * x_2 var x_1 x_2 with constraints {A[0]} * x_1 + {A[1]} * x_2 <= {b[0]}"
+            drawing_func = f"equation {c[0]} * x_1 + {c[1]} * x_2 var x_1 x_2 with constraints {globals()['A'][0]} * x_1 + {globals()['A'][1]} * x_2 <= {globals()['b'][0]}"
         else:
             drawing_func = ""
     except:
