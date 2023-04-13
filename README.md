@@ -17,10 +17,8 @@ FelixBot is a discord bot designed to help students visualize **spaces and vecto
 <p align="center"><img src="https://user-images.githubusercontent.com/77892920/231904770-7a7821ab-2f27-4863-8e9c-c7331646aff2.png" width = "512" height = "512"> </p>
 
 * Plotting **equation**: ```f::imagine equation x**2 + y**2 var x y with constraints x > 0```<br>
-*Response*:<br>
 <p align="center"><img src="https://user-images.githubusercontent.com/77892920/231906540-0aa46ae4-2d99-4446-b347-8a44c4d7ea65.gif"> </p>
 <p align="center"><img src="https://user-images.githubusercontent.com/77892920/231906547-a0137c07-5730-4395-9b44-5b4e3cad3722.gif" width = "512" height = "512"> </p>
 
-* **Solving an optimization problem**: ```f::optimize linear c=[5, 1, 2, 0, -5, 6 ,0.5] # constraints= [x >= 0, sum(x) == 3]```
-*Response*:<br>
+* **Solving an optimization problem**: ```f::optimize linear c=[5, 1, 2, 0, -5, 6 ,0.5] # constraints= [x >= 0, sum(x) == 3]```<br>
 <p align="center"><img src="https://user-images.githubusercontent.com/77892920/231906011-d98e68e7-2f61-4a95-855a-92abcec40841.png"> </p>
