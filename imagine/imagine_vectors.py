@@ -2,32 +2,8 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from .animate import animate_vectors
 from time import gmtime, strftime
+import InputCommands
 import re
-
-def __get_vectors(str_vectors):
-    
-    ## Error handling
-    #Check for missing '#'
-    if "][" in str_vectors.replace(" ",""): raise Exception("Missing `#`")
-    #Chck for missing '['
-    if error := re.findall(r"\]\d", str_vectors.replace(" ","")): raise Exception(f"Fix `{str(*error)}` !\nPerhaps missing a `[`")
-
-    str_vectors_list = str_vectors.split("#")
-
-    vectors = []
-    max_coordinate = min_coordinate = 0
-    for vec in str_vectors_list:
-        try:
-            temp_vec = eval(vec.strip())
-        except:
-            raise Exception("Something's wrong! Perhaps missing a `comma` or `]`?")
-        vectors.append(temp_vec)
-        if(max(temp_vec) >= max_coordinate ): max_coordinate = max(temp_vec)
-        if(min(temp_vec) <= min_coordinate ): min_coordinate = min(temp_vec)
-
-    if max_coordinate > 60 or min_coordinate < -60:
-        raise Exception("Your vector is too epic. Try something smaller!")
-    return vectors, max_coordinate, min_coordinate
 
 def __imagine_2d(vectors, max_coordinate, min_coordinate):
     fig, ax = plt.subplots(figsize=(10.24,10.24))
@@ -52,7 +28,7 @@ def __imagine_2d(vectors, max_coordinate, min_coordinate):
     #ax.set_yticks(range(round(min_coordinate*1.1), round(max_coordinate*1.1), 2))
 
     #plot
-    ax.title(f"Drawing {len(vectors)} vector(s)", fontdict={'fontsize': 18})
+    ax.set_title(f"Drawing {len(vectors)} vector(s)", fontdict={'fontsize': 18})
     ax.legend()
     ax.grid(visible=True, alpha= 0.25)
     fig.savefig(filename := "./__output/2Dvec_" + strftime("%d%b%Y%H%M%S", gmtime()) + ".png")
@@ -105,14 +81,11 @@ def __imagine_3d(vectors, max_coordinate, min_coordinate, angle= 240, is_frame= 
         return filename
     
 def draw_vectors(str_vectors):
-    vectors, max_coordinate, min_coordinate = __get_vectors(str_vectors)
-    length_vectors = [len(vec) for vec in vectors]
-
-    if(len(set(length_vectors)) != 1): raise Exception("Make sure all vectors are of the same dimension!")
-    
+    vector_input = InputCommands.VectorsParser(str_vectors)
+    vectors, max_coordinate, min_coordinate = vector_input.get_vectors(), vector_input.get_max_coordinate(), vector_input.get_min_coordinate()
+        
     if len(vectors[0]) == 1:
-        if (length_vectors == [1] * len(length_vectors)):
-            vectors = [vec + [0] for vec in vectors]
+        vectors = [vec + [0] for vec in vectors]
         filename = __imagine_2d(vectors, max_coordinate, min_coordinate)
         
     elif len(vectors[0]) == 2:

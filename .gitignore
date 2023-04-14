@@ -18,3 +18,6 @@ imagine/__pycache__/
 #ignore folders
 __frames/
 __output/
+
+#json file
+*.json
