@@ -1,17 +1,1 @@
-{
-    "equationsin(x_1*pi/180)*cos(x_2*pi/180)varx_1x_2withconstraintsnone": "./__output/animated_3Deq_26Mar2023222306.mp4",
-    "equationsqrt(x_1)*sqrt(x_2)varx_1x_2withconstraintsnone": "./__output/animated_3Deq_26Mar2023222715.mp4",
-    "equation0.5*x_1*exp(x_2)varx_1x_2withconstraintsx_2>=-5,x_2<=5": "./__output/animated_3Deq_26Mar2023223101.mp4",
-    "equationsin(x*pi/90)*yvarxywithconstraintsnone": "./__output/animated_3Deq_26Mar2023230015.mp4",
-    "vectors[1,1,1]#[2,2,2]": "./__output/animated_3Dvec_26Mar2023232305.mp4",
-    "equationx**2+y**2varxywithconstraintsnone": "./__output/animated_3Deq_26Mar2023235514.mp4",
-    "equationx*log(x)varxwithconstraintsnone": "./__output/2Deq_27Mar2023140405.png",
-    "equationx**3-3*xvarxwithconstraintsx<=0": "./__output/2Deq_27Mar2023155103.png",
-    "equationx**3-3*xvarxwithconstraintsx<=5": "./__output/2Deq_27Mar2023155201.png",
-    "equationx**3-3*xvarxwithconstraintsx<=10": "./__output/2Deq_27Mar2023155222.png",
-    "equationx**3-3*xvarxwithconstraintsx<=20": "./__output/2Deq_27Mar2023155239.png",
-    "equationsin(t)vart": "./__output/2Deq_08Apr2023231310.png",
-    "vector[5,1]": "./__output/2Dvec_09Apr2023005758.png",
-    "vector[5,1]#[6,3]#[5,0]": "./__output/2Dvec_09Apr2023005841.png",
-    "vector[5,1,-2]#[6,3,0]#[5,0,3]": "./__output/animated_3Dvec_09Apr2023010137.mp4"
-}
+{"equationsin(x_1*pi/180)*cos(x_2*pi/180)varx_1x_2withconstraintsnone": "./__output/animated_3Deq_26Mar2023222306.mp4", "equationsqrt(x_1)*sqrt(x_2)varx_1x_2withconstraintsnone": "./__output/animated_3Deq_26Mar2023222715.mp4", "equation0.5*x_1*exp(x_2)varx_1x_2withconstraintsx_2>=-5,x_2<=5": "./__output/animated_3Deq_26Mar2023223101.mp4", "equationsin(x*pi/90)*yvarxywithconstraintsnone": "./__output/animated_3Deq_26Mar2023230015.mp4", "vectors[1,1,1]#[2,2,2]": "./__output/animated_3Dvec_26Mar2023232305.mp4", "equationx**2+y**2varxywithconstraintsnone": "./__output/animated_3Deq_26Mar2023235514.mp4", "equationx*log(x)varxwithconstraintsnone": "./__output/2Deq_27Mar2023140405.png", "equationx**3-3*xvarxwithconstraintsx<=0": "./__output/2Deq_27Mar2023155103.png", "equationx**3-3*xvarxwithconstraintsx<=5": "./__output/2Deq_27Mar2023155201.png", "equationx**3-3*xvarxwithconstraintsx<=10": "./__output/2Deq_27Mar2023155222.png", "equationx**3-3*xvarxwithconstraintsx<=20": "./__output/2Deq_27Mar2023155239.png", "equationsin(t)vart": "./__output/2Deq_08Apr2023231310.png", "vector[5,1]": "./__output/2Dvec_09Apr2023005758.png", "vector[5,1]#[6,3]#[5,0]": "./__output/2Dvec_09Apr2023005841.png", "vector[5,1,-2]#[6,3,0]#[5,0,3]": "./__output/animated_3Dvec_09Apr2023010137.mp4", "vectors[2,3]#[1,0]#[6,4]": "./__output/2Dvec_13Apr2023232120.png", "equationlog(y)vary": "./__output/2Deq_13Apr2023232156.png", "equationx**2+y**2varxywithconstraintsx>0": "./__output/animated_3Deq_13Apr2023232510.mp4"}
