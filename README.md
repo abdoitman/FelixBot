@@ -4,11 +4,32 @@
 FelixBot is a discord bot designed to help students visualize **spaces and vectors** in **2D and 3D** using matplotlib. Also, **solve optimization problems** using **CVXPY**.
 
 **Table of Contents** :
+  * [__Functionality__](#functionality)
   * [__Demonstration__](#demonstration)
     * [__Key Features__](#key-features)
     * [__Quick Examples__](#quick-examples)
   * [__How To Use__](#how-to-use)
   * [__How It Works__](#how-it-works)
+
+<hr>
+
+## **Functionality**
+The bot is capable of many things. To make the bot listen to your messages, start the message with `f::` followed by the desired command. <br>
+Here are the available commands: <br>
+  * `f::show ... var ...` : This is used to display **written equation in a better way**.
+
+  * `f::imagine` : This is used to display **vector**, **a set of vectors**, or **an equation**. You have **multiple options** to draw as follows:
+    * `f::imagine vector` : displays a **single vector**.
+    * `f::imagine vectors` : displays **a set of vectors** with `#` to separate vectors apart.
+    * `f::imagine equation ... var ... with constraints ... , ...` : displays **an equation with some constraints**.
+   
+  * `f::optimize` : This is used to **solve some optimization problems**. Define the problem using the following commands: 
+    * `f::optimize func ... var ... with constraints ...` : solves **general optimization problems**
+    * `f::optimize linear A = [...] # b = [...] # c = [...]` : solves **LP optimization problems**
+    * `f::optimize quadratic P = [...] # q = [...] # ...` : solves **quadratic optimization problems**
+    * `f::optimize ls A = [...] # b = [...]` : solves **least squares problems**
+    
+ * `f::check dt [ [...] , [...] ]` : This is used to check the **definite type** of a matrix and returns its **eigenvalues**. 
 
 <hr>
 
