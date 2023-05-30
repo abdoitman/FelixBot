@@ -3,7 +3,7 @@
 # **Welcome to FelixBot**
 FelixBot is a discord bot designed to help students visualize **spaces and vectors** in **2D and 3D** using matplotlib. Also, **solve optimization problems** using **CVXPY**.
 
-## **Table of Contents** :
+## **Table of Contents**
   * [__Functionality__](#functionality)
   * [__Demonstration__](#demonstration)
     * [__Key Features__](#key-features)
