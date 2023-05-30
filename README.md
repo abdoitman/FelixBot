@@ -116,7 +116,7 @@ The project has an architecture of multiple modules that can be classified as fo
 #### `write_latex` module
 [write_latex.py](https://github.com/abdoitman/FelixBot/blob/main/write_latex.py) has a main function which is `show_latex`. Internal function `__save_latex_png` uses [latex.codecogs](http://latex.codecogs.com) to convert the latex into PNG transparent images. After the image is saved, `show_latex` returns the path to the PNG file.
 #### `imagine` package
-See the documentation of the package [here](https://github.com/abdoitman/FelixBot/blob/main/imagine/readme.md).
+See the documentation of the package [here](https://github.com/abdoitman/FelixBot/blob/main/imagine/README.md).
 #### `optimize` module
 [optimize.py](https://github.com/abdoitman/FelixBot/blob/main/optimize.py) has a main function which is `solve` which analyzes the input command and calls the corresponding the solver functions; which are:
   1. `__optimize_general_functions` which solves a general function optimization problem.
