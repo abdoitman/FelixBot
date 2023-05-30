@@ -13,14 +13,14 @@ This ([imagine.py](https://github.com/abdoitman/FelixBot/blob/main/imagine/imagi
 <hr>
 
 ## imagine_vectors
-This ([imagine_vectors.py](https://github.com/abdoitman/FelixBot/blob/main/imagine/imagine_vectors.py)) is responsible for drawing the vector(s) whether in 2D or 3D. The main function that gets called is `draw_vectors`.
+This module ([imagine_vectors.py](https://github.com/abdoitman/FelixBot/blob/main/imagine/imagine_vectors.py)) is responsible for drawing the vector(s) whether in 2D or 3D. The main function that gets called is `draw_vectors`.
 
 <hr>
 
 ## imagine_space
-This ([imagine_space.py](https://github.com/abdoitman/FelixBot/blob/main/imagine/imagine_space.py)) is responsible for drawing an equation in a 2D plane or a surface in a 3D space. The main function that gets called is `draw_space`.
+This module ([imagine_space.py](https://github.com/abdoitman/FelixBot/blob/main/imagine/imagine_space.py)) is responsible for drawing an equation in a 2D plane or a surface in a 3D space. The main function that gets called is `draw_space`.
 
 <hr>
 
 ## animate
-This ([animate.py](https://github.com/abdoitman/FelixBot/blob/main/imagine/animate.py)) is responsible for animating every plot. The result is a .mp4 file of the rotating surface/vectors in space with an elevation and roll angles of (35°, 0°).
+This module ([animate.py](https://github.com/abdoitman/FelixBot/blob/main/imagine/animate.py)) is responsible for animating every plot. The result is a .mp4 file of the rotating surface/vectors in space with an elevation and roll angles of (35°, 0°).
