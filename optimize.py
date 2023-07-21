@@ -23,12 +23,11 @@ def __optimize_general_functions(message:str):
 
     for var in variables:
         globals()[f"{var}"] = cp.Variable()
-
     try:
         constraints = [eval(__change_operation_to_cp(cons)) for cons in constraints]
     except Exception as e:
         print(e)
-        raise Exception("Please use `<=` and `>=` instead of `<` and `>`.")
+        raise Exception("Please use `<=` and `>=` instead of `<` and `>`. ME")
     
     try:
         equation = __change_operation_to_cp(equation)
