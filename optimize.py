@@ -49,14 +49,14 @@ def __optimize_general_functions(message:str):
     return response , drawing_command
 
 def __optimize_linear_program(message:str):
-    opt_problem = InputCommands.OptimizationMatriciesParser(message, "linear")
-    matricies = opt_problem.get_matricies()
-    c = matricies["c"]
+    opt_problem = InputCommands.OptimizationMatricesParser(message, "linear")
+    matrices = opt_problem.get_matrices()
+    c = matrices["c"]
     n = c.size
     x = cp.Variable(n)
     problem_constraints = []
 
-    for name, value in matricies.items():
+    for name, value in matrices.items():
         globals()[name] = value
     
     if constraints := opt_problem.get_constraints():
@@ -88,10 +88,10 @@ Optimal value of x is {x.value}"""
     return response
 
 def __optimize_least_squares(message:str) -> str:
-    opt_problem = InputCommands.OptimizationMatriciesParser(message, "ls")
-    matricies = opt_problem.get_matricies()
-    A = matricies["A"]
-    b = matricies["b"]
+    opt_problem = InputCommands.OptimizationMatricesParser(message, "ls")
+    matrices = opt_problem.get_matrices()
+    A = matrices["A"]
+    b = matrices["b"]
 
     m , n = A.shape
 
